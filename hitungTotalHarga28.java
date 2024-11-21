@@ -39,19 +39,37 @@ public class hitungTotalHarga28 {
         }
         System.out.println("===========================");
 
-        System.out.print("Masukkan nomor menu yang ingin Anda pesan: ");
-        int pilihanMenu = scanner.nextInt();
-        System.out.print("Masukkan jumlah item yang ingin dipesan: ");
-        int banyakItem = scanner.nextInt();
+        int totalKeseluruhan = 0;
+        char tambahPesanan = 'n';
 
-        int totalHarga = hitungTotalHarga(pilihanMenu, banyakItem);
+        do {
+            System.out.print("Masukkan nomor menu yang ingin Anda pesan: ");
+            int pilihanMenu = scanner.nextInt();
+
+            if (pilihanMenu < 1 || pilihanMenu > daftarMenu.length) {
+                System.out.println("Pilihan menu tidak valid! Silakan coba lagi.");
+                continue;
+            }
+
+            System.out.print("Masukkan jumlah item yang ingin dipesan: ");
+            int banyakItem = scanner.nextInt();
+
+            int totalHarga = hitungTotalHarga(pilihanMenu, banyakItem);
+            totalKeseluruhan += totalHarga;
+            scanner.nextLine();
+
+            System.out.print("Apakah Anda ingin menambahkan pesanan lagi? (y/n): ");
+            tambahPesanan = scanner.nextLine().charAt(0);
+
+        } while (tambahPesanan == 'y' || tambahPesanan == 'Y');
 
         System.out.print("Masukkan kode promo (jika ada): ");
-        scanner.nextLine(); 
         String kodePromo = scanner.nextLine();
 
-        double hargaAkhir = hitungDiskon(totalHarga, kodePromo);
+        double hargaAkhir = hitungDiskon(totalKeseluruhan, kodePromo);
 
-        System.out.println("Total harga untuk pesanan: Rp" + hargaAkhir);
+        System.out.println("===========================");
+        System.out.println("Total harga keseluruhan pesanan Anda: Rp" + hargaAkhir);
+        System.out.println("Terima kasih telah memesan di Resto Kafe!");
     }
 }
